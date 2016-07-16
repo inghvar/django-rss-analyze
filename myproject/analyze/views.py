@@ -92,7 +92,6 @@ def analyze_one_twit(pk):
         words += nltk.tokenize.wordpunct_tokenize(sent)
 
     test = word_feats(words)
-
     return articl.title + " : " + classifier.classify(test)
 
 
