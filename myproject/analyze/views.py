@@ -93,7 +93,6 @@ def analyze_one_twit(pk):
 
     test = word_feats(words)
 
-    print articl.title + " : " + classifier.classify(test)
     return articl.title + " : " + classifier.classify(test)
 
 

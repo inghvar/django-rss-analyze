@@ -1,6 +1,5 @@
 ================================================
 
     Simple Django-app with import RSS-field
-    abd NTLK sentiment classification
-
+    and naive bayes sentiment classification 
 ================================================
