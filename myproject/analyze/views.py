@@ -28,7 +28,7 @@ def index(request):
 
 
 def article(request, pk):
-    twit = prepare_one_twit(pk)
+    twit = analyze_one_twit(pk)
     return render_to_response('article.html',
             {'twit': twit},
             context_instance=RequestContext(request))
@@ -81,27 +81,18 @@ def word_feats(words):
     return dict([(word, True) for word in words])
 
 
-def prepare_one_twit(pk):
+def analyze_one_twit(pk):
     articl = Article.objects.get(id=pk)
 
-    # remove html tag
-    soup = BeautifulSoup(str(html_text), "html.parser")
-    raw_text = soup.get_text()
-    # remove non letter
-    raw_text = re.sub(r"\\'", "'", raw_text)
-    raw_text = re.sub("[^a-zA-Z']", " ", raw_text)
-    # remove 'u'
-    raw_text = re.sub("u", "", raw_text)
-    # remove whitespace
-    raw_text = re.sub(r"  ", " ", raw_text)
-    raw_text = re.sub(r"   ", " ", raw_text)
-    raw_text = re.sub("' ", "", raw_text)
-    raw_text = re.sub(" '", "", raw_text)
-    # convert to lower case
-    raw_text = raw_text.strip().lower()
-    test = word_feats(raw_text)
+    data_clean = articl.summary.decode('utf-8')
+    sents = nltk.tokenize.sent_tokenize(data_clean)
 
-    # Print results of classification
+    words = []
+    for sent in sents:
+        words += nltk.tokenize.wordpunct_tokenize(sent)
+
+    test = word_feats(words)
+
     print articl.title + " : " + classifier.classify(test)
     return articl.title + " : " + classifier.classify(test)
 
