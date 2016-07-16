@@ -1,5 +1,2 @@
-================================================
-
-    Simple Django-app with import RSS-field
-    and naive bayes sentiment classification 
-================================================
+1. pip install -r requirements.txt
+2. python import.py ==> import RSS-fields
